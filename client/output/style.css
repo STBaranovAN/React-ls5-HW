@@ -1,0 +1,27 @@
+body, html, #container {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+
+div.main {
+	border: 2px solid black;
+	margin: 10px;
+}
+
+ul.rooms {
+	width: 250px;
+	border: 2px solid blue;
+	list-style-type: none;
+}
+
+ul.rooms li {
+	border: 2px solid blue;
+	background: azure;
+	color: black;
+	margin: 10px; 
+}
+
+ul.rooms li:hover {
+	cursor: pointer;
+} 

@@ -58,7 +58,7 @@ export default class Rooms extends React.Component {
 		return (
 			<ul className="rooms">
 				{allRooms.map((item, index) => {
-					return <Room key={index} name={item.name}/>
+					return <Room key={index} name={item.name} onClick={ () => alert(`This is room: ${item.name}`) }/>
 				})}
 			</ul>
 		)

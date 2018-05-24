@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Room from "./item";
+import Messages from "./messages";
+import PostMsg from "./postmsg";
 
 export default class Rooms extends React.Component {
 	constructor(props){
@@ -43,10 +45,23 @@ export default class Rooms extends React.Component {
 				})
 		} );
 	}
+
+	updateMessages(roomId){
+
+		let rooms = this.state.allRooms;
+
+		let currentRoom = rooms.find( element => {
+			if(element.id === roomId)
+			{
+				this.setState({currentRoom: element});
+				return;
+			}
+		});
+	}
 	
 	render() {
-
-		let allRooms = this.state.allRooms ? this.state.allRooms : [];
+		let allRooms = this.state.allRooms || [];
+		let currentRoom = this.state.currentRoom || {}
 
 		if(allRooms.length == 0)
 		{
@@ -56,11 +71,15 @@ export default class Rooms extends React.Component {
 		// allRooms = [{ name: "1" }, { name: "2" }, { name: "3" }];
 
 		return (
-			<ul className="rooms">
-				{allRooms.map((item, index) => {
-					return <Room key={index} name={item.name} onClick={ () => alert(`This is room: ${item.name}`) }/>
-				})}
-			</ul>
+			<div className="rooms">
+				<ul>
+					{allRooms.map((item, index) => {
+						return <Room key={index} name={item.name} onClick={this.updateMessages.bind(this, item.id)}/>
+					})}
+				</ul>
+				<Messages roomid={currentRoom.id}/>
+				<PostMsg/>
+			</div>
 		)
 	}
 }

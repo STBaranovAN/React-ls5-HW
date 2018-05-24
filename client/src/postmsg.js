@@ -11,6 +11,8 @@ export default class PostMsg extends React.Component {
 			msgText: "",
 			err: false
 		}
+
+		this.api_url = 'http://localhost:6060/api/addmessage';
 	}
 
 	componentWillMount(){
@@ -18,56 +20,68 @@ export default class PostMsg extends React.Component {
 		});
 	}
 
-	/* enterGetTempMode() {
-		let city = this.state.currentText; 
-		if(city === "" || city === this.props.emptyNoteText)
+	getText(e){
+		let textAreaText = e.target.value;
+		this.setState({msgText: textAreaText});
+	}
+
+	postNewMessage(){
+
+		let msgText = this.state.msgText;
+
+		// alert("Send new message: " + msgText);
+
+		if(!msgText)
 		{
-			alert("You must enter the name of city!");
+			alert("Enter message text!");
 			return;
 		}
 
-		let inTempMode = this.state.inTempMode;
+		let roomId = "8618528d-f739-4dd7-9be2-aa2fa0c9642a";
 
-		if(inTempMode) {
-			if(this.timerId){
-				clearInterval(this.timerId);
-			}
-			this.responseObj = null;
-		} else {
-			this.timerId = setInterval( () => {
-				let wUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=875012f111377f30bfe2073d73e59ee8&units=metric`;
+		axios.post(this.api_url, {
+			text: msgText,
+			userId: 12345,
+			messageId: uuid.v4(),
+			roomId: roomId 
+			}).then( responseObj => {
 
-				axios.get(wUrl).then( data => {
-					this.responseObj = data;
-					this.componentDidMount();
-				}, err => {
-					this.setState({err: true}, () => {
-						clearInterval(this.timerId);
-						console.log(err);
-						this.setState({
-							inTempMode: false,
-							tempText: "Info by city not found!",
-							err: true
-						}); 
-					})
-				} );		
-			}, this.timerDelay);
-		}
+			}, err => {
+			this.setState({err: true}, () => {
+				console.log(err);
+				this.setState({
+					err: true
+				}); 
+			})
+		});
 
-		this.setState({
-			inTempMode: !inTempMode
-		}); 
-	} */
+		/* axios.post('/user', {
+			firstName: 'Fred',
+			lastName: 'Flintstone'
+		  })
+		  .then(function (response) {
+			console.log(response);
+		  })
+		  .catch(function (error) {
+			console.log(error);
+		  }); */
+	}
 
 	render() {
 
-		/* if(this.state.err){
-			return <div>Oops!!! We've got problems on server!</div>
-		} */
-
 		return (
-			<div>
+			<div className="msgform">
+				<textarea 
+					value={this.state.msgText}
+					onChange={this.getText.bind(this)}
+				>
+				</textarea>
+				<button
+					onClick={this.postNewMessage.bind(this)}
+				>
+					New message
+				</button>
 			</div>
-			)
+		)
 	}
 }

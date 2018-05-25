@@ -51,11 +51,17 @@ export default class Messages extends React.Component {
 
 		let roomName = this.state.currentRoomName || "";
 		let allMessages = this.state.allMessages || [];
+		// allMessages = [];
 		let err = this.state.err;
 
-		if(err && allMessages.length == 0)
+		if(err)
 		{
-			return <div><h2>No messages in room...</h2></div>;
+			return <div className="messages"><h2>An error occured...</h2></div>;
+		}
+
+		if(allMessages.length == 0)
+		{
+			return <div className="messages"><h2>{`No messages in room ${roomName}...`}</h2></div>;
 		}
 
 		return (

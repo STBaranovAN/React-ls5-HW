@@ -51,8 +51,9 @@ export default class Messages extends React.Component {
 
 		let roomName = this.state.currentRoomName || "";
 		let allMessages = this.state.allMessages || [];
+		let err = this.state.err;
 
-		if(allMessages.length == 0)
+		if(err && allMessages.length == 0)
 		{
 			return <div><h2>No messages in room...</h2></div>;
 		}
@@ -60,11 +61,11 @@ export default class Messages extends React.Component {
 		return (
 			<div className="messages">
 				<h2>{roomName}</h2>
-				<ul>
+				<div className="text-right">
 					{allMessages.map((item, index) => {
-						return <li key={index}>{item.text}</li>
+						return <p key={index}>{item.text}</p>
 					})}
-				</ul>
+				</div>
 			</div>
 			)
 	}

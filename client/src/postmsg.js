@@ -72,6 +72,9 @@ export default class PostMsg extends React.Component {
 		return (
 			<div className="container msgform">
 				<div className="row">
+					<div className="col">&nbsp;</div>
+				</div>
+				<div className="row">
 					<div className="col">
 						<textarea
 							className="form-control" 
@@ -92,6 +95,9 @@ export default class PostMsg extends React.Component {
 							New message
 						</button>
 					</div>
+				</div>
+				<div className="row">
+					<div className="col">&nbsp;</div>
 				</div>
 			</div>
 		)

@@ -82,13 +82,7 @@ export default class Rooms extends React.Component {
 					</div>
 					<div className="col">
 						<Messages roomid={currentRoom.id}/>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col">
 						&nbsp;
-					</div>
-					<div className="col">	
 						<PostMsg/>
 					</div>
 				</div>

@@ -6,11 +6,12 @@ body, html, #container {
 }
 
 div.main {
-	border: 2px solid black;
+	/* border: 2px solid black; */
 	margin: 10px;
 }
 
 div.rooms ul {
+	height: 100%;
 	border: 2px solid blue;
 	list-style-type: none;
 }
@@ -28,6 +29,7 @@ div.rooms ul li:hover {
 
 div.messages {
 	border: 2px solid coral;
+	padding: 15px;
 }
 
 div.msgform {

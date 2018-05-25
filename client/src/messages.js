@@ -6,20 +6,29 @@ export default class Messages extends React.Component {
 		super(props);
 
 		this.state = {
+			currentRoomId: null,
+			currentRoomName: null,
 			allMessages: []
-			/* currentRoomId: props.roomid.id,
-			currentRoomName: props.roomid.name */
 		}
 
 		this.api_url = 'http://localhost:6060/api';
 	}
 
-	componentDidMount(){
-		let roomId = "8618528d-f739-4dd7-9be2-aa2fa0c9642a";
-		// let roomId = this.state.currentRoomId || "";
-		// let roomId = this.props.roomid || "";
-		this.getRoomMessages(roomId);
+	/* componentDidMount(){
+		if(this.props.selectedRoom) {
+			this.setState({roomId: nextProps.selectedRoom.id});
+		}
+	} */
+
+	componentWillReceiveProps(nextProps){
+		// this.setState({roomId: nextProps.selectedRoom.id});
+		// this.setState({currentRoomName: nextProps.selectedRoom.name});
+		this.getRoomMessages(nextProps.selectedRoom.id);
 	}
+	
+	/* shouldComponentUpdate(nextProps, nextState){
+		return false;
+	} */
 
 	getRoomMessages(roomId){
 
@@ -34,34 +43,26 @@ export default class Messages extends React.Component {
 					messages = responseObj.data;
 					if(messages.length > 0)
 					{
-						this.setState({allMessages: messages});
+						this.setState({allMessages: messages}, () => {
+							console.log(this.state);
+						});
 					}
 				}
 			}, err => {
 				this.setState({err: true}, () => {
 					console.log(err);
-					this.setState({
-						err: true
-					}); 
 				})
 		} );
 	}
-	
-	render() {
 
-		let roomName = this.state.currentRoomName || "";
+	render() {
+		let roomName = this.state.currentRoomName || "Choose a room";
 		let allMessages = this.state.allMessages || [];
-		// allMessages = [];
 		let err = this.state.err;
 
-		if(err)
+		if(err && allMessages.length == 0)
 		{
-			return <div className="messages"><h2>An error occured...</h2></div>;
-		}
-
-		if(allMessages.length == 0)
-		{
-			return <div className="messages"><h2>{`No messages in room ${roomName}...`}</h2></div>;
+			return <div><h2>No messages in room...</h2></div>;
 		}
 
 		return (

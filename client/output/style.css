@@ -10,6 +10,10 @@ div.main {
 	margin: 10px;
 }
 
+div.rooms {
+	height: 100%;
+}
+
 div.rooms ul {
 	height: 100%;
 	border: 2px solid blue;

@@ -70,17 +70,29 @@ export default class PostMsg extends React.Component {
 	render() {
 
 		return (
-			<div className="msgform">
-				<textarea 
-					value={this.state.msgText}
-					onChange={this.getText.bind(this)}
-				>
-				</textarea>
-				<button
-					onClick={this.postNewMessage.bind(this)}
-				>
-					New message
-				</button>
+			<div className="container msgform">
+				<div className="row">
+					<div className="col">
+						<textarea
+							className="form-control" 
+							value={this.state.msgText}
+							onChange={this.getText.bind(this)}
+						>
+						</textarea>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col">&nbsp;</div>
+				</div>
+				<div className="row">
+					<div className="col text-right">
+						<button className="btn btn-primary"
+							onClick={this.postNewMessage.bind(this)}
+						>
+							New message
+						</button>
+					</div>
+				</div>
 			</div>
 		)
 	}

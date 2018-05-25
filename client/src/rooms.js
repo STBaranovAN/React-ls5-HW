@@ -71,14 +71,27 @@ export default class Rooms extends React.Component {
 		// allRooms = [{ name: "1" }, { name: "2" }, { name: "3" }];
 
 		return (
-			<div className="rooms">
-				<ul>
-					{allRooms.map((item, index) => {
-						return <Room key={index} name={item.name} onClick={this.updateMessages.bind(this, item.id)}/>
-					})}
-				</ul>
-				<Messages roomid={currentRoom.id}/>
-				<PostMsg/>
+			<div className="container">
+				<div className="row">
+					<div className="col rooms">
+						<ul>
+							{allRooms.map((item, index) => {
+								return <Room key={index} name={item.name} onClick={this.updateMessages.bind(this, item.id)}/>
+							})}
+						</ul>
+					</div>
+					<div className="col">
+						<Messages roomid={currentRoom.id}/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col">
+						&nbsp;
+					</div>
+					<div className="col">	
+						<PostMsg/>
+					</div>
+				</div>
 			</div>
 		)
 	}

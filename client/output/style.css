@@ -22,6 +22,7 @@ div.rooms ul {
 
 div.rooms ul li {
 	border: 2px solid blue;
+	border-radius: 5px;
 	background: azure;
 	color: black;
 	margin: 10px; 

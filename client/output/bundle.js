@@ -23079,8 +23079,6 @@ var Messages = function (_React$Component) {
 			currentRoomName: null,
 			allMessages: []
 		};
-
-		_this.api_url = 'http://localhost:6060/api';
 		return _this;
 	}
 
@@ -23109,13 +23107,13 @@ var Messages = function (_React$Component) {
 			if (!roomId) return;
 
 			var messages = [];
-			_axios2.default.get(this.api_url + ("/" + roomId + "/messages")).then(function (responseObj) {
+			_axios2.default.get(confObj.api_url + ("/" + roomId + "/messages")).then(function (responseObj) {
 
 				if (responseObj.hasOwnProperty("data")) {
 					messages = responseObj.data;
-					if (messages.length > 0) {
+					if (messages.length >= 0) {
 						_this2.setState({ allMessages: messages, err: false }, function () {
-							console.log(_this2.state);
+							// console.log(this.state);
 						});
 					}
 				}
@@ -23128,6 +23126,7 @@ var Messages = function (_React$Component) {
 	}, {
 		key: "render",
 		value: function render() {
+
 			var error = this.state.err || false;
 			var roomName = this.state.currentRoomName || "Choose a room";
 			var allMessages = this.state.allMessages || [];
@@ -23142,7 +23141,9 @@ var Messages = function (_React$Component) {
 						"Server error occured..."
 					)
 				);
-			} else if (allMessages.length == 0) {
+			}
+
+			if (allMessages.length == 0) {
 				return _react2.default.createElement(
 					"div",
 					{ className: "messages" },
@@ -23232,12 +23233,10 @@ var PostMsg = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (PostMsg.__proto__ || Object.getPrototypeOf(PostMsg)).call(this, props));
 
 		_this.state = {
-			msgText: "",
+			msgText: null,
 			currentRoom: {},
 			err: false
 		};
-
-		_this.api_url = 'http://localhost:6060/api/addmessage';
 		return _this;
 	}
 
@@ -23266,9 +23265,9 @@ var PostMsg = function (_React$Component) {
 
 			var currentRoom = this.state.currentRoom;
 
-			_axios2.default.post(this.api_url, {
+			_axios2.default.post(confObj.api_url_post, {
 				text: msgText,
-				userId: 12345,
+				userId: confObj.userId,
 				messageId: _uuid2.default.v4(),
 				roomId: currentRoom.id
 			}).then(function (responseObj) {
@@ -23429,8 +23428,6 @@ var Rooms = function (_React$Component) {
 			currentRoom: {},
 			err: false
 		};
-
-		_this.api_url = 'http://localhost:6060/api';
 		return _this;
 	}
 
@@ -23448,11 +23445,11 @@ var Rooms = function (_React$Component) {
 			var _this2 = this;
 
 			var rooms = [];
-			_axios2.default.get(this.api_url).then(function (responseObj) {
+			_axios2.default.get(confObj.api_url).then(function (responseObj) {
 
 				if (responseObj.hasOwnProperty("data")) {
 					rooms = responseObj.data.chats;
-					if (rooms.length > 0) {
+					if (rooms.length >= 0) {
 						_this2.setState({ allRooms: rooms });
 					}
 				}
@@ -23466,23 +23463,9 @@ var Rooms = function (_React$Component) {
 			});
 		}
 	}, {
-		key: "updateMessages",
-		value: function updateMessages(roomId) {
-			var _this3 = this;
-
-			var rooms = this.state.allRooms;
-
-			var currentRoom = rooms.find(function (element) {
-				if (element.id === roomId) {
-					_this3.setState({ currentRoom: element });
-					return;
-				}
-			});
-		}
-	}, {
 		key: "render",
 		value: function render() {
-			var _this4 = this;
+			var _this3 = this;
 
 			var error = this.state.err || false;
 			var allRooms = this.state.allRooms || [];
@@ -23498,7 +23481,9 @@ var Rooms = function (_React$Component) {
 						"Server error occured..."
 					)
 				);
-			} else if (allRooms.length == 0) {
+			}
+
+			if (allRooms.length == 0) {
 				return _react2.default.createElement(
 					"div",
 					{ className: "rooms" },
@@ -23520,7 +23505,7 @@ var Rooms = function (_React$Component) {
 						return _react2.default.createElement(_item2.default, {
 							key: index, name: item.name,
 							onClick: function onClick() {
-								_this4.props.setRoom(item);
+								_this3.props.setRoom(item);
 							}
 						});
 					})

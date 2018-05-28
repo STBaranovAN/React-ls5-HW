@@ -8,12 +8,10 @@ export default class PostMsg extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			msgText: "",
+			msgText: null,
 			currentRoom: {},
 			err: false
 		}
-
-		this.api_url = 'http://localhost:6060/api/addmessage';
 	}
 
 	getText(e){
@@ -37,9 +35,9 @@ export default class PostMsg extends React.Component {
 
 		let currentRoom = this.state.currentRoom;
 
-		axios.post(this.api_url, {
+		axios.post(confObj.api_url_post, {
 			text: msgText,
-			userId: 12345,
+			userId: confObj.userId,
 			messageId: uuid.v4(),
 			roomId: currentRoom.id 
 			}).then( responseObj => {

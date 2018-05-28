@@ -9,8 +9,6 @@ export default class Messages extends React.Component {
 			currentRoomName: null,
 			allMessages: []
 		}
-
-		this.api_url = 'http://localhost:6060/api';
 	}
 
 	/* componentDidMount(){
@@ -34,15 +32,15 @@ export default class Messages extends React.Component {
 			return;
 
 		let messages = [];
-			axios.get(this.api_url + `/${roomId}/messages`).then( responseObj => {
+			axios.get(confObj.api_url + `/${roomId}/messages`).then( responseObj => {
 
 				if(responseObj.hasOwnProperty("data"))
 				{
 					messages = responseObj.data;
-					if(messages.length > 0)
+					if(messages.length >= 0)
 					{
 						this.setState({allMessages: messages, err: false}, () => {
-							console.log(this.state);
+							// console.log(this.state);
 						});
 					}
 				}
@@ -54,17 +52,19 @@ export default class Messages extends React.Component {
 	}
 
 	render() {
+
 		let error = this.state.err || false;
 		let roomName = this.state.currentRoomName || "Choose a room";
 		let allMessages = this.state.allMessages || [];
 
-		if(error)		
-		{
+		if(error) {
 			return (<div className="messages">
 						<h2>Server error occured...</h2>
 					</div>
 			)
-		} else if(allMessages.length == 0) {
+		}
+		
+		if(allMessages.length == 0) {
 			return (<div className="messages">
 						<h2>No messages in room...</h2>
 					</div>
@@ -80,7 +80,7 @@ export default class Messages extends React.Component {
 					})}
 				</div>
 			</div>
-			)
+		)
 	}
 }
 

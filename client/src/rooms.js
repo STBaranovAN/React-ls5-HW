@@ -13,8 +13,6 @@ export default class Rooms extends React.Component {
 			currentRoom: {},
 			err: false
 		}
-
-		this.api_url = 'http://localhost:6060/api';
 	}
 
 	componentWillMount(){
@@ -26,12 +24,12 @@ export default class Rooms extends React.Component {
 
 	getAllRooms(){
 		let rooms = [];
-			axios.get(this.api_url).then( responseObj => {
+			axios.get(confObj.api_url).then( responseObj => {
 
 				if(responseObj.hasOwnProperty("data"))
 				{
 					rooms = responseObj.data.chats;
-					if(rooms.length > 0)
+					if(rooms.length >= 0)
 					{
 						this.setState({allRooms: rooms});
 					}
@@ -45,19 +43,6 @@ export default class Rooms extends React.Component {
 				})
 		} );
 	}
-
-	updateMessages(roomId){
-
-		let rooms = this.state.allRooms;
-
-		let currentRoom = rooms.find( element => {
-			if(element.id === roomId)
-			{
-				this.setState({currentRoom: element});
-				return;
-			}
-		});
-	}
 	
 	render() {
 		let error = this.state.err || false;
@@ -70,7 +55,9 @@ export default class Rooms extends React.Component {
 						<h2>Server error occured...</h2>
 					</div>
 			)
-		} else if(allRooms.length == 0) {
+		}
+		
+		if(allRooms.length == 0) {
 			return (<div className="rooms">
 						<h2>No rooms...</h2>
 					</div>
@@ -82,11 +69,11 @@ export default class Rooms extends React.Component {
 						<ul>
 							{allRooms.map((item, index) => {
 								return <Room
-											key={index} name={item.name} 
-											onClick={() => { 
-												this.props.setRoom(item);
-											}}
-										/>
+										key={index} name={item.name} 
+										onClick={() => { 
+											this.props.setRoom(item);
+										}}
+									/>
 							})}
 						</ul>
 			</div>

@@ -16,11 +16,6 @@ export default class PostMsg extends React.Component {
 		this.api_url = 'http://localhost:6060/api/addmessage';
 	}
 
-	/* componentWillMount(){
-		this.setState({
-		});
-	} */
-
 	getText(e){
 		let textAreaText = e.target.value;
 		this.setState({msgText: textAreaText});
@@ -33,16 +28,12 @@ export default class PostMsg extends React.Component {
 	postNewMessage(){
 
 		let msgText = this.state.msgText;
-
-		// alert("Send new message: " + msgText);
-
 		if(!msgText)
 		{
-			alert("Enter message text!");
+			// alert("Enter message text!");
+			this.setState({err: true});
 			return;
 		}
-
-		let roomId = "8618528d-f739-4dd7-9be2-aa2fa0c9642a";
 
 		let currentRoom = this.state.currentRoom;
 
@@ -52,8 +43,11 @@ export default class PostMsg extends React.Component {
 			messageId: uuid.v4(),
 			roomId: currentRoom.id 
 			}).then( responseObj => {
-				debugger;
 				this.props.setRoom(currentRoom)
+				this.setState({
+					msgText: "",
+					err: false
+				}); 
 			}, err => {
 			this.setState({err: true}, () => {
 				console.log(err);
@@ -62,17 +56,6 @@ export default class PostMsg extends React.Component {
 				}); 
 			})
 		});
-
-		/* axios.post('/user', {
-			firstName: 'Fred',
-			lastName: 'Flintstone'
-		  })
-		  .then(function (response) {
-			console.log(response);
-		  })
-		  .catch(function (error) {
-			console.log(error);
-		  }); */
 	}
 
 	render() {
@@ -81,6 +64,9 @@ export default class PostMsg extends React.Component {
 			<div className="container msgform">
 				<div className="row">
 					<div className="col">&nbsp;</div>
+				</div>
+				<div className="row" style={ {display: this.state.err ? "block" : "none"} }>
+					<div className="col"><p className="error">Enter message text!</p></div>
 				</div>
 				<div className="row">
 					<div className="col">

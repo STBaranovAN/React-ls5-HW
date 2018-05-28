@@ -28,11 +28,12 @@ export default class Main extends React.Component {
 					</div>
 					<div className="col">
 						<Messages selectedRoom={this.state.selectedRoom}/>
+						<br/>
 						<PostMsg setRoom={this.setRoom} selectedRoom={this.state.selectedRoom}/>
 					</div>
 				</div>
 			</div>
-			)
+		)
 	}
 }
 

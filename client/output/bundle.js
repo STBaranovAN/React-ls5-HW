@@ -23020,6 +23020,7 @@ var Main = function (_React$Component) {
 						"div",
 						{ className: "col" },
 						_react2.default.createElement(_messages2.default, { selectedRoom: this.state.selectedRoom }),
+						_react2.default.createElement("br", null),
 						_react2.default.createElement(_postmsg2.default, { setRoom: this.setRoom, selectedRoom: this.state.selectedRoom })
 					)
 				)
@@ -23075,7 +23076,6 @@ var Messages = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (Messages.__proto__ || Object.getPrototypeOf(Messages)).call(this, props));
 
 		_this.state = {
-			currentRoomId: null,
 			currentRoomName: null,
 			allMessages: []
 		};
@@ -23086,15 +23086,14 @@ var Messages = function (_React$Component) {
 
 	/* componentDidMount(){
  	if(this.props.selectedRoom) {
- 		this.setState({roomId: nextProps.selectedRoom.id});
+ 		this.setState({currentRoomId: nextProps.selectedRoom.id});
  	}
  } */
 
 	_createClass(Messages, [{
 		key: "componentWillReceiveProps",
 		value: function componentWillReceiveProps(nextProps) {
-			// this.setState({roomId: nextProps.selectedRoom.id});
-			// this.setState({currentRoomName: nextProps.selectedRoom.name});
+			this.setState({ currentRoomName: nextProps.selectedRoom.name });
 			this.getRoomMessages(nextProps.selectedRoom.id);
 		}
 
@@ -23115,7 +23114,7 @@ var Messages = function (_React$Component) {
 				if (responseObj.hasOwnProperty("data")) {
 					messages = responseObj.data;
 					if (messages.length > 0) {
-						_this2.setState({ allMessages: messages }, function () {
+						_this2.setState({ allMessages: messages, err: false }, function () {
 							console.log(_this2.state);
 						});
 					}
@@ -23129,14 +23128,24 @@ var Messages = function (_React$Component) {
 	}, {
 		key: "render",
 		value: function render() {
+			var error = this.state.err || false;
 			var roomName = this.state.currentRoomName || "Choose a room";
 			var allMessages = this.state.allMessages || [];
-			var err = this.state.err;
 
-			if (err && allMessages.length == 0) {
+			if (error) {
 				return _react2.default.createElement(
 					"div",
-					null,
+					{ className: "messages" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						"Server error occured..."
+					)
+				);
+			} else if (allMessages.length == 0) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "messages" },
 					_react2.default.createElement(
 						"h2",
 						null,
@@ -23232,11 +23241,6 @@ var PostMsg = function (_React$Component) {
 		return _this;
 	}
 
-	/* componentWillMount(){
- 	this.setState({
- 	});
- } */
-
 	_createClass(PostMsg, [{
 		key: "getText",
 		value: function getText(e) {
@@ -23254,15 +23258,11 @@ var PostMsg = function (_React$Component) {
 			var _this2 = this;
 
 			var msgText = this.state.msgText;
-
-			// alert("Send new message: " + msgText);
-
 			if (!msgText) {
-				alert("Enter message text!");
+				// alert("Enter message text!");
+				this.setState({ err: true });
 				return;
 			}
-
-			var roomId = "8618528d-f739-4dd7-9be2-aa2fa0c9642a";
 
 			var currentRoom = this.state.currentRoom;
 
@@ -23272,8 +23272,11 @@ var PostMsg = function (_React$Component) {
 				messageId: _uuid2.default.v4(),
 				roomId: currentRoom.id
 			}).then(function (responseObj) {
-				debugger;
 				_this2.props.setRoom(currentRoom);
+				_this2.setState({
+					msgText: "",
+					err: false
+				});
 			}, function (err) {
 				_this2.setState({ err: true }, function () {
 					console.log(err);
@@ -23282,17 +23285,6 @@ var PostMsg = function (_React$Component) {
 					});
 				});
 			});
-
-			/* axios.post('/user', {
-   	firstName: 'Fred',
-   	lastName: 'Flintstone'
-     })
-     .then(function (response) {
-   	console.log(response);
-     })
-     .catch(function (error) {
-   	console.log(error);
-     }); */
 		}
 	}, {
 		key: "render",
@@ -23308,6 +23300,19 @@ var PostMsg = function (_React$Component) {
 						"div",
 						{ className: "col" },
 						"\xA0"
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row", style: { display: this.state.err ? "block" : "none" } },
+					_react2.default.createElement(
+						"div",
+						{ className: "col" },
+						_react2.default.createElement(
+							"p",
+							{ className: "error" },
+							"Enter message text!"
+						)
 					)
 				),
 				_react2.default.createElement(
@@ -23479,18 +23484,31 @@ var Rooms = function (_React$Component) {
 		value: function render() {
 			var _this4 = this;
 
+			var error = this.state.err || false;
 			var allRooms = this.state.allRooms || [];
 			var currentRoom = this.state.currentRoom || {};
 
-			if (allRooms.length == 0) {
+			if (error) {
 				return _react2.default.createElement(
-					"h2",
-					null,
-					"No rooms..."
+					"div",
+					{ className: "rooms" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						"Server error occured..."
+					)
+				);
+			} else if (allRooms.length == 0) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "rooms" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						"No rooms..."
+					)
 				);
 			}
-
-			// allRooms = [{ name: "1" }, { name: "2" }, { name: "3" }];
 
 			return _react2.default.createElement(
 				"div",

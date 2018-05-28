@@ -43,3 +43,7 @@ div.msgform {
 div.msgform textarea {
 	width: 100%;
 }
+
+p.error {
+	color: crimson;
+}

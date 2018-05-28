@@ -6,7 +6,6 @@ export default class Messages extends React.Component {
 		super(props);
 
 		this.state = {
-			currentRoomId: null,
 			currentRoomName: null,
 			allMessages: []
 		}
@@ -16,13 +15,12 @@ export default class Messages extends React.Component {
 
 	/* componentDidMount(){
 		if(this.props.selectedRoom) {
-			this.setState({roomId: nextProps.selectedRoom.id});
+			this.setState({currentRoomId: nextProps.selectedRoom.id});
 		}
 	} */
 
 	componentWillReceiveProps(nextProps){
-		// this.setState({roomId: nextProps.selectedRoom.id});
-		// this.setState({currentRoomName: nextProps.selectedRoom.name});
+		this.setState({currentRoomName: nextProps.selectedRoom.name});
 		this.getRoomMessages(nextProps.selectedRoom.id);
 	}
 	
@@ -43,7 +41,7 @@ export default class Messages extends React.Component {
 					messages = responseObj.data;
 					if(messages.length > 0)
 					{
-						this.setState({allMessages: messages}, () => {
+						this.setState({allMessages: messages, err: false}, () => {
 							console.log(this.state);
 						});
 					}
@@ -56,13 +54,21 @@ export default class Messages extends React.Component {
 	}
 
 	render() {
+		let error = this.state.err || false;
 		let roomName = this.state.currentRoomName || "Choose a room";
 		let allMessages = this.state.allMessages || [];
-		let err = this.state.err;
 
-		if(err && allMessages.length == 0)
+		if(error)		
 		{
-			return <div><h2>No messages in room...</h2></div>;
+			return (<div className="messages">
+						<h2>Server error occured...</h2>
+					</div>
+			)
+		} else if(allMessages.length == 0) {
+			return (<div className="messages">
+						<h2>No messages in room...</h2>
+					</div>
+			)
 		}
 
 		return (

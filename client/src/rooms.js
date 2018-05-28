@@ -60,15 +60,22 @@ export default class Rooms extends React.Component {
 	}
 	
 	render() {
+		let error = this.state.err || false;
 		let allRooms = this.state.allRooms || [];
-		let currentRoom = this.state.currentRoom || {}
+		let currentRoom = this.state.currentRoom || {};
 
-		if(allRooms.length == 0)
+		if(error)		
 		{
-			return <h2>No rooms...</h2>;
+			return (<div className="rooms">
+						<h2>Server error occured...</h2>
+					</div>
+			)
+		} else if(allRooms.length == 0) {
+			return (<div className="rooms">
+						<h2>No rooms...</h2>
+					</div>
+			)
 		}
-
-		// allRooms = [{ name: "1" }, { name: "2" }, { name: "3" }];
 
 		return (
 			<div className="rooms">
@@ -81,7 +88,6 @@ export default class Rooms extends React.Component {
 											}}
 										/>
 							})}
-								
 						</ul>
 			</div>
 		)

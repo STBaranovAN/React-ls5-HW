@@ -23322,7 +23322,7 @@ var PostMsg = function (_React$Component) {
 						{ className: "col" },
 						_react2.default.createElement("textarea", {
 							className: "form-control",
-							value: this.state.msgText,
+							value: this.state.msgText || '',
 							onChange: this.getText.bind(this)
 						})
 					)

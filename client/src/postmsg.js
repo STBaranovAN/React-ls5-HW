@@ -70,7 +70,7 @@ export default class PostMsg extends React.Component {
 					<div className="col">
 						<textarea
 							className="form-control" 
-							value={this.state.msgText}
+							value={this.state.msgText || ''}
 							onChange={this.getText.bind(this)}
 						>
 						</textarea>

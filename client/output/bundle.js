@@ -23091,8 +23091,10 @@ var Messages = function (_React$Component) {
 	_createClass(Messages, [{
 		key: "componentWillReceiveProps",
 		value: function componentWillReceiveProps(nextProps) {
-			this.setState({ currentRoomName: nextProps.selectedRoom.name });
-			this.getRoomMessages(nextProps.selectedRoom.id);
+			if (nextProps.selectedRoom) {
+				this.setState({ currentRoomName: nextProps.selectedRoom.name });
+				this.getRoomMessages(nextProps.selectedRoom.id);
+			}
 		}
 
 		/* shouldComponentUpdate(nextProps, nextState){

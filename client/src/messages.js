@@ -18,8 +18,11 @@ export default class Messages extends React.Component {
 	} */
 
 	componentWillReceiveProps(nextProps){
-		this.setState({currentRoomName: nextProps.selectedRoom.name});
-		this.getRoomMessages(nextProps.selectedRoom.id);
+		if(nextProps.selectedRoom)
+		{
+			this.setState({currentRoomName: nextProps.selectedRoom.name});
+			this.getRoomMessages(nextProps.selectedRoom.id);
+		}
 	}
 	
 	/* shouldComponentUpdate(nextProps, nextState){

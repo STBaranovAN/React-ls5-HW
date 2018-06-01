@@ -1,21 +1,14 @@
 body, html, #container {
-	overflow: hidden;
 	width: 100%;
-	height: 100%;
+	height: 90%;
 	margin: 0;
 }
 
 div.main {
-	/* border: 2px solid black; */
 	margin: 10px;
 }
 
-div.rooms {
-	height: 100%;
-}
-
 div.rooms ul {
-	height: 100%;
 	border: 2px solid blue;
 	list-style-type: none;
 }

@@ -32,7 +32,6 @@ router.get("/api/:roomId/messages", function(req, res){
 	else {
 		res.sendStatus(404);
 	}
-	
 });
 
 router.post("/api/addmessage", function(req, res){
@@ -51,5 +50,11 @@ router.post("/api/addmessage", function(req, res){
 	});	
 	
 });
+
+router.get("/api/allmessages", function(req, res){
+	var roomMessages = msg.messages;
+	res.json(roomMessages);
+}
+);
 
 module.exports = router;

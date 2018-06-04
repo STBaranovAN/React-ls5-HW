@@ -8,8 +8,11 @@ div.main {
 	margin: 10px;
 }
 
-div.rooms ul {
+div.rooms {
 	border: 2px solid blue;
+}
+
+div.rooms ul {
 	list-style-type: none;
 }
 

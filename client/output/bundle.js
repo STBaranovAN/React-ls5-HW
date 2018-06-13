@@ -23765,7 +23765,28 @@ var Messages = function (_React$Component) {
 				);
 			}
 
-			if (allMessages.length == 0) {
+			if (allMessages.length > 0) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "messages" },
+					_react2.default.createElement(
+						"h2",
+						null,
+						roomName
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "text-right" },
+						allMessages.map(function (item, index) {
+							return _react2.default.createElement(
+								"p",
+								{ key: index },
+								item.text
+							);
+						})
+					)
+				);
+			} else {
 				return _react2.default.createElement(
 					"div",
 					{ className: "messages" },
@@ -23776,27 +23797,6 @@ var Messages = function (_React$Component) {
 					)
 				);
 			}
-
-			return _react2.default.createElement(
-				"div",
-				{ className: "messages" },
-				_react2.default.createElement(
-					"h2",
-					null,
-					roomName
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "text-right" },
-					allMessages.map(function (item, index) {
-						return _react2.default.createElement(
-							"p",
-							{ key: index },
-							item.text
-						);
-					})
-				)
-			);
 		}
 	}]);
 
@@ -24021,14 +24021,6 @@ var _item = __webpack_require__(/*! ./item */ "./src/item.js");
 
 var _item2 = _interopRequireDefault(_item);
 
-var _messages = __webpack_require__(/*! ./messages */ "./src/messages.js");
-
-var _messages2 = _interopRequireDefault(_messages);
-
-var _postmsg = __webpack_require__(/*! ./postmsg */ "./src/postmsg.js");
-
-var _postmsg2 = _interopRequireDefault(_postmsg);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24091,7 +24083,6 @@ var Rooms = function (_React$Component) {
 
 			var error = this.state.err || false;
 			var allRooms = this.state.allRooms || [];
-			var currentRoom = this.state.currentRoom || {};
 
 			if (error) {
 				return _react2.default.createElement(
@@ -24105,7 +24096,24 @@ var Rooms = function (_React$Component) {
 				);
 			}
 
-			if (allRooms.length == 0) {
+			if (allRooms.length > 0) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "rooms" },
+					_react2.default.createElement(
+						"ul",
+						null,
+						allRooms.map(function (item, index) {
+							return _react2.default.createElement(_item2.default, {
+								key: index, name: item.name,
+								onClick: function onClick() {
+									_this3.props.setRoom(item);
+								}
+							});
+						})
+					)
+				);
+			} else {
 				return _react2.default.createElement(
 					"div",
 					{ className: "rooms" },
@@ -24116,23 +24124,6 @@ var Rooms = function (_React$Component) {
 					)
 				);
 			}
-
-			return _react2.default.createElement(
-				"div",
-				{ className: "rooms" },
-				_react2.default.createElement(
-					"ul",
-					null,
-					allRooms.map(function (item, index) {
-						return _react2.default.createElement(_item2.default, {
-							key: index, name: item.name,
-							onClick: function onClick() {
-								_this3.props.setRoom(item);
-							}
-						});
-					})
-				)
-			);
 		}
 	}]);
 

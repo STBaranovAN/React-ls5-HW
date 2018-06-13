@@ -67,23 +67,23 @@ export default class Messages extends React.Component {
 			)
 		}
 		
-		if(allMessages.length == 0) {
+		if(allMessages.length > 0) {
+			return (
+				<div className="messages">
+					<h2>{roomName}</h2>
+					<div className="text-right">
+						{allMessages.map((item, index) => {
+							return <p key={index}>{item.text}</p>
+						})}
+					</div>
+				</div>
+			)
+		} else {
 			return (<div className="messages">
 						<h2>No messages in room...</h2>
 					</div>
 			)
 		}
-
-		return (
-			<div className="messages">
-				<h2>{roomName}</h2>
-				<div className="text-right">
-					{allMessages.map((item, index) => {
-						return <p key={index}>{item.text}</p>
-					})}
-				</div>
-			</div>
-		)
 	}
 }
 
